@@ -1,0 +1,168 @@
+package me.jaycen1000;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Main extends JavaPlugin
+{
+	
+	public void onEnable()
+	{
+		getCommand("pluginfind").setExecutor(new PluginFinder());
+		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "<-------->");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + ": Starting up!");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "<-------->");
+	}
+	
+	public void onDisable()
+	{
+		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "<-------->");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + ": Shutting down!");
+		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "<-------->");
+	}
+@Override
+
+public boolean onCommand(CommandSender p, Command cmd, String label, String[] args) {
+	
+	if (cmd.getName().equalsIgnoreCase("permfind"))
+		
+		p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+	if (p.hasPermission("permfinder.use"))
+	{
+	{
+		if (args.length == 0)
+		
+		{
+			p.sendMessage(ChatColor.GRAY + "                     By Jaycen1000 on SpigotMC");
+			p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "USAGE: /permfinder <command>.");
+		
+		} else
+		
+		{
+		
+			PluginCommand pcmd = Bukkit.getServer().getPluginCommand(args[0]);
+			
+			if (args[0].contains("worldguard:") )
+			{
+				p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Since you added the key 'worldguard:' WorldGuard Detected, Perm Links: " + ChatColor.YELLOW + "http://wiki.sk89q.com/wiki/WorldGuard/Permissions");
+				p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+				p.sendMessage(ChatColor.DARK_GRAY + "");
+				return true;
+				
+			}
+			if (args[0].contains("/") )
+			{
+				p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Since you added the slash '/' WorldEdit/FAWE Detected Perm, Links: " + ChatColor.YELLOW + "http://wiki.sk89q.com/wiki/WorldEdit/Permissions");
+				p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+				p.sendMessage(ChatColor.DARK_GRAY + "");
+				return true;
+				
+			}
+			if (args[0].equalsIgnoreCase("reload") )
+			{
+				if(p.hasPermission("permfinder.use"))
+				{
+				if(getServer().getPluginManager().getPlugin("PlugMan") != null)
+				{
+					p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Reloading the plugin (Using PlugMan)");
+					Bukkit.getServer().dispatchCommand(getServer().getConsoleSender(), "plugman reload PermFinder");
+				} else 
+				{
+					p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "Reloading the plugin (Not Using PlugMan)");
+					Bukkit.getPluginManager().disablePlugin(this);
+					Bukkit.getPluginManager().enablePlugin(this);
+				}
+				p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GREEN + "Reloaded the plugin");
+				p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+				p.sendMessage(ChatColor.DARK_GRAY + "");
+				return true;
+				} else 
+				{
+					p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "You do not have permission to use this command.");
+					p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+					p.sendMessage(ChatColor.DARK_GRAY + "");
+					return true;
+				}
+				
+			}
+			if(!(pcmd == null))
+			{
+			if(!(pcmd.getPermission() == null))
+			{
+				p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Permission (" + ChatColor.YELLOW + pcmd.getName() + ChatColor.GRAY + "): " + pcmd.getPermission());
+			}
+			if(!(pcmd.getPlugin().getName() == null))
+			{
+			p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Name Found: " + ChatColor.YELLOW + pcmd.getPlugin().getName());
+			p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Specific Plugin Name Found: " + ChatColor.YELLOW + pcmd.getPlugin());
+			}	
+			if(!(pcmd.getPlugin().getDescription().getVersion().equals("")))
+			{
+				p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Version Found: " + ChatColor.YELLOW + pcmd.getPlugin().getDescription().getVersion());
+			}	
+			if(!(pcmd.getPlugin().getDescription().getSoftDepend().isEmpty()))
+			{
+				p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Soft Depends Found: " + ChatColor.YELLOW +pcmd.getPlugin().getDescription().getSoftDepend());
+			}
+			if(!(pcmd.getPlugin().getDescription().getAuthors().isEmpty()))
+			{
+				p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Authors Found: " + ChatColor.YELLOW + pcmd.getPlugin().getDescription().getAuthors());
+			}
+
+			if(!(pcmd.getDescription().equals("")))
+				{
+					p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Command Description Found: " + ChatColor.YELLOW + pcmd.getDescription().toString());
+				}
+				if(!(pcmd.getUsage().equals("")))
+				{
+					p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Command Usage Found: " + ChatColor.YELLOW + pcmd.getUsage());
+				}
+				if(!(pcmd.getAliases().isEmpty()))
+				{
+					p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Command Aliases Found: " + ChatColor.YELLOW + pcmd.getAliases().toString());
+				}
+				if(!(pcmd.getPlugin().getDescription().getDepend().isEmpty()))
+				{
+					p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Command Depends Found: " + ChatColor.YELLOW +pcmd.getPlugin().getDescription().getDepend());
+				}
+				if (pcmd.getPlugin().getName().equalsIgnoreCase("Essentials"))
+				{
+					p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Essentials Found, can not find permission. Link to permissions: " + ChatColor.YELLOW + "http://wiki.mc-ess.net/doc/permissions");
+				}
+
+					
+			
+				if(!(pcmd.getPlugin().getName() == null))
+					{
+						p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Google Search Permission Found: " + ChatColor.YELLOW + "http://www.google.com/search?q=" + pcmd.getName() +"+permission+" + pcmd.getPlugin().getName() + "+spigot");
+					} else 
+					{
+						p.sendMessage("If you see this it means The creator of the first argument you typed in somehow did not Plugin Name in the plugin.yml");
+						p.sendMessage(ChatColor.DARK_GRAY + "");
+					}
+	}else
+	{
+		p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Could not find that command (ERROR: Null Pointer Exeption).");
+		p.sendMessage(ChatColor.DARK_GRAY + "");
+	}
+
+	}
+
+
+	}
+	} else
+	{
+		p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "You do not have permission to use this command.");
+		p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+		p.sendMessage(ChatColor.DARK_GRAY + "");
+		return true;
+	}
+	p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+	p.sendMessage(ChatColor.DARK_GRAY + "");
+	return true;
+}
+}
