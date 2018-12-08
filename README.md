@@ -2,6 +2,7 @@
 - don't make money
 - credit me
 - don't diss my product
+- don't claim as one's own
 # You are allowed to do any modification as long as you:
 - credit me
 - don't claim as one's own
