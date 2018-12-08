@@ -7,4 +7,4 @@
 - don't claim as one's own
 - if you think you can make the product better
 - for learning
-Thanks!
+# Thanks for reading!
