@@ -1,9 +1,5 @@
 package me.jaycen1000;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -80,36 +76,6 @@ public class PluginFinder implements CommandExecutor {
 	    }
 	    return null;
 	}
-	public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-	    if (cmd.getName().equalsIgnoreCase("permfind")) {
-	            if (args.length == 1) {
-	                    ArrayList<String> commands = new ArrayList<String>();
-	                   
-	                    if (!args[0].equals("")) {
-	 
-	                    for (Plugin plugin : Bukkit.getServer().getPluginManager().getPlugins()) {
-	                        if(plugin.getName().startsWith(args[0].toLowerCase())) 
-	                        {
-	                        	commands.add(plugin.getName());
-	                        }
-	                    	
-	                    }
-	                    }
-	                    else {
-	                       	for (Plugin plugin : Bukkit.getServer().getPluginManager().getPlugins()) {
-	                            commands.add(plugin.getName());
-	                   }
-	           
-	                    }
-	                   
-	                    Collections.sort(commands);
-	                   
-	                    return commands;
-	            }
-	    }
-	   
-	    return null;
 
-	}
 
 }
