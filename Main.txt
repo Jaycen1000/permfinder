@@ -1,10 +1,15 @@
 package me.jaycen1000;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.help.HelpTopic;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin
@@ -12,7 +17,7 @@ public class Main extends JavaPlugin
 	
 	public void onEnable()
 	{
-		getCommand("pluginfind").setExecutor(new PluginFinder());
+		getCommand("pluginfind").setTabCompleter(new PluginTabComplete());
 		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "<-------->");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + ": Starting up!");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "<-------->");
@@ -164,5 +169,38 @@ public boolean onCommand(CommandSender p, Command cmd, String label, String[] ar
 	p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
 	p.sendMessage(ChatColor.DARK_GRAY + "");
 	return true;
+
+}
+public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+    if (cmd.getName().equalsIgnoreCase("permfind")) {
+            if (args.length == 1) {
+                    ArrayList<String> commands = new ArrayList<String>();
+                   
+                    if (!args[0].equals("")) {
+ 
+                    for (HelpTopic cmdLabel : getServer().getHelpMap().getHelpTopics()) {
+                        if(cmdLabel.getName().substring(1, cmdLabel.getName().length()).startsWith(args[0].toLowerCase())) 
+                        {
+                        	commands.add(cmdLabel.getName().substring(1, cmdLabel.getName().length()));
+                        }
+                    	
+                    }
+                    }
+                    else {
+                       	for (HelpTopic cmdLabel : getServer().getHelpMap().getHelpTopics()) {
+                            commands.add(cmdLabel.getName().substring(1, cmdLabel.getName().length()));
+                   }
+           
+                    }
+                   
+                    Collections.sort(commands);
+                   
+                    return commands;
+            }
+    }
+   
+    return null;
+
 }
 }
+
