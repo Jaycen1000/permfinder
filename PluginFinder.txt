@@ -1,0 +1,80 @@
+package me.jaycen1000;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
+
+public class PluginFinder implements CommandExecutor {
+
+	@Override
+	public boolean onCommand(CommandSender p, Command cmd, String label, String[] args) {
+		if(cmd.getName().equalsIgnoreCase("pluginfind"))
+		{
+			p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+			if(p.hasPermission("permfinder.use.plugin"))
+			{
+				if (args.length == 0)
+				{
+					p.sendMessage(ChatColor.GRAY + "                     By Jaycen1000 on SpigotMC");
+					p.sendMessage(ChatColor.RED + "Plugin" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "USAGE: /pluginfinder <command>.");
+				} else if (args.length >= 1)
+				{
+					Plugin plcmd = getPluginIgnoreCase(args[0]);
+					if (plcmd == null)
+					{
+						p.sendMessage(ChatColor.RED + "Plugin" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Not Found");
+						p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+						return true;
+					} else
+					{
+						
+						p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Name Found: " + ChatColor.YELLOW + plcmd.getName());
+						p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Specific Plugin Name Found: " + ChatColor.YELLOW + plcmd);
+						}	
+					if(!(plcmd.getDescription().getVersion().equals("")))
+					{
+						p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Version Found: " + ChatColor.YELLOW + plcmd.getDescription().getVersion());
+					}			
+						if(!(plcmd.getDescription().getSoftDepend().isEmpty()))
+						{
+							p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Soft Depends Found: " + ChatColor.YELLOW +plcmd.getDescription().getSoftDepend());
+						}
+						if(!(plcmd.getDescription().getDepend().isEmpty()))
+						{
+							p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Dependencies Found: " + ChatColor.YELLOW +plcmd.getDescription().getDepend());
+						}
+						if(!(plcmd.getDescription().getAuthors().isEmpty()))
+						{
+							p.sendMessage(ChatColor.RED + "﹂ Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Authors Found: " + ChatColor.YELLOW + plcmd.getDescription().getAuthors());
+						}
+						if((plcmd.isEnabled()))
+						{
+							p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Status: " + ChatColor.GREEN + "ENABLED");
+						} else if(!(plcmd.isEnabled())) {
+							p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Status: " + ChatColor.RED + "DISABLED");
+						}
+					}
+				}
+			} else 
+			{
+				p.sendMessage(ChatColor.RED + "Plugin" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "You do not have permission to use this command.");
+				p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+				p.sendMessage(ChatColor.DARK_GRAY + "");
+				return true;
+			}
+		p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
+		p.sendMessage(ChatColor.DARK_GRAY + "");
+		return true;
+	}
+	public Plugin getPluginIgnoreCase(String argument){
+	    for (Plugin plugin : Bukkit.getServer().getPluginManager().getPlugins()) {
+	        if(plugin.getName().equalsIgnoreCase(argument))
+	            return plugin;
+	    }
+	    return null;
+	}
+
+}
