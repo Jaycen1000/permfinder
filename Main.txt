@@ -134,6 +134,12 @@ public boolean onCommand(CommandSender p, Command cmd, String label, String[] ar
 				{
 					p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Essentials Found, can not find permission. Link to permissions: " + ChatColor.YELLOW + "http://wiki.mc-ess.net/doc/permissions");
 				}
+				if((pcmd.getPlugin().isEnabled()))
+				{
+					p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Status: " + ChatColor.GREEN + "ENABLED");
+				} else if(!(pcmd.getPlugin().isEnabled())) {
+					p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Status: " + ChatColor.RED + "DISABLED");
+				}
 
 					
 			
@@ -147,7 +153,7 @@ public boolean onCommand(CommandSender p, Command cmd, String label, String[] ar
 					}
 	}else
 	{
-		p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Could not find that command (ERROR: Null Pointer Exeption).");
+		p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Could not find that command/plugin (ERROR: Null Pointer Exeption).");
 		p.sendMessage(ChatColor.DARK_GRAY + "");
 	}
 
