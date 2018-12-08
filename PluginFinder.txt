@@ -23,7 +23,7 @@ public class PluginFinder implements CommandExecutor {
 				} else if (args.length >= 1)
 				{
 					Plugin plcmd = getPluginIgnoreCase(args[0]);
-					if (plcmd == null)
+					if (plcmd.getName() == null)
 					{
 						p.sendMessage(ChatColor.RED + "Plugin" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Plugin Not Found");
 						p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
