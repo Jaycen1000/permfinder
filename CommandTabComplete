@@ -1,0 +1,45 @@
+package me.jaycen1000;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.plugin.Plugin;
+
+public class CommandTabComplete implements TabCompleter {
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("pluginfind")) {
+            if (args.length == 1) {
+                    ArrayList<String> entityTypes = new ArrayList<String>();
+                   
+                    if (!args[0].equals("")) {
+                            for (Plugin type : Bukkit.getServer().getPluginManager().getPlugins()) {
+                                    if (type.getName().toLowerCase().startsWith(args[0].toLowerCase())) {
+                                            entityTypes.add(type.getDescription().getName());
+                                    }
+                            }
+                    }
+                   
+                    else {
+                            for (Plugin type : Bukkit.getServer().getPluginManager().getPlugins()) {
+
+                                            entityTypes.add(type.getName());
+
+                            }
+                    }
+                   
+                    Collections.sort(entityTypes);
+                   
+                    return entityTypes;
+            }
+        }
+		return null;
+	}
+}
+
