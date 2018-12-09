@@ -58,7 +58,7 @@ public class PluginFinder implements CommandExecutor {
 						}
 					}
 				}
-			} else 
+			} else
 			{
 				p.sendMessage(ChatColor.RED + "Plugin" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.RED + "You do not have permission to use this command.");
 				p.sendMessage(ChatColor.DARK_GRAY + "<-------->");
