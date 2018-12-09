@@ -1,5 +1,7 @@
 package me.jaycen1000;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -12,8 +14,11 @@ public class Main extends JavaPlugin
 	
 	public void onEnable()
 	{
-		getCommand("pluginfind").setTabCompleter(new PluginTabComplete());
+		
 		getCommand("permfind").setTabCompleter(new PluginTabComplete());
+		getCommand("pluginfind").setExecutor(new PluginFinder());
+		getCommand("pluginfind").setTabCompleter(new CommandTabComplete());
+		
 		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "<-------->");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + ": Starting up!");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GRAY + "<-------->");
@@ -94,7 +99,74 @@ public boolean onCommand(CommandSender p, Command cmd, String label, String[] ar
 			{
 			if(!(pcmd.getPermission() == null))
 			{
+
+				
 				p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Permission (" + ChatColor.YELLOW + pcmd.getName() + ChatColor.GRAY + "): " + pcmd.getPermission());
+			} else
+			{
+				ArrayList<String>possiblePermissions = new ArrayList<String>();
+				String name = pcmd.getPlugin().getName().toLowerCase();
+				possiblePermissions.add(name + "." + args[0].toLowerCase());
+				possiblePermissions.add(name + ".user." + args[0].toLowerCase());
+				possiblePermissions.add(name + ".admin." + args[0].toLowerCase());
+				if(args[0].contains("gm"))
+				{
+					possiblePermissions.add(name + ".gamemode");
+					
+					if(args[0].contains("c"))
+					{
+						possiblePermissions.add(name + ".gamemode.creative");
+					}
+					if(args[0].contains("s"))
+					{
+						possiblePermissions.add(name + ".gamemode.survival");
+					}
+					if(args[0].contains("a"))
+					{
+						possiblePermissions.add(name + ".gamemode.adventure");
+					}
+					if(args[0].contains("sp"))
+					{
+						possiblePermissions.add(name + ".gamemode.spectator");
+					}
+					name = "user." + pcmd.getPlugin().getName().toLowerCase();
+					
+					if(args[0].contains("c"))
+					{
+						possiblePermissions.add(name + ".gamemode.creative");
+					}
+					if(args[0].contains("s"))
+					{
+						possiblePermissions.add(name + ".gamemode.survival");
+					}
+					if(args[0].contains("a"))
+					{
+						possiblePermissions.add(name + ".gamemode.adventure");
+					}
+					if(args[0].contains("sp"))
+					{
+						possiblePermissions.add(name + ".gamemode.spectator");
+					}
+					name = "admin." + pcmd.getPlugin().getName().toLowerCase();
+					
+					if(args[0].contains("c"))
+					{
+						possiblePermissions.add(name + ".gamemode.creative");
+					}
+					if(args[0].contains("s"))
+					{
+						possiblePermissions.add(name + ".gamemode.survival");
+					}
+					if(args[0].contains("a"))
+					{
+						possiblePermissions.add(name + ".gamemode.adventure");
+					}
+					if(args[0].contains("sp"))
+					{
+						possiblePermissions.add(name + ".gamemode.spectator");
+					}
+				}
+				p.sendMessage(ChatColor.RED + "Perm" + ChatColor.GREEN + "Finder " + ChatColor.DARK_GRAY + ">> " + ChatColor.GRAY + "Possible Permission: " + ChatColor.YELLOW + possiblePermissions);
 			}
 			if(!(pcmd.getPlugin().getName() == null))
 			{
